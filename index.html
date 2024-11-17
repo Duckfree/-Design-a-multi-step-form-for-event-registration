@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <form class="multi-step-form">
+            <div class="progress-bar">
+                <div class="step active" data-step="1">1</div>
+                <div class="step" data-step="2">2</div>
+                <div class="step" data-step="3">3</div>
+            </div>
+
+            <div class="form-steps">
+                <!-- Step 1: Personal Information -->
+                <div class="step-content active" data-step="1">
+                    <h2>Personal Information</h2>
+                    <div class="input-group">
+                        <input placeholder="_"type="text" required>
+                        <label>Full Name</label>
+                        <span class="highlight"></span>
+                    </div>
+                    <div class="input-group">
+                        <input placeholder="_"type="email" required>
+                        <label>Email Address</label>
+                        <span class="highlight"></span>
+                    </div>
+                    <div class="input-group">
+                        <input placeholder="_"placeholder="_"type="tel" required>
+                        <label>Phone Number</label>
+                        <span class="highlight"></span>
+                    </div>
+                    <div class="buttons">
+                        <button type="button" class="next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Event Details -->
+                <div class="step-content" data-step="2">
+                    <h2>Event Details</h2>
+                    <div class="input-group">
+                        <select required>
+                            <option value="" disabled selected>Select Event Type</option>
+                            <option value="conference">Conference</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="seminar">Seminar</option>
+                        </select>
+                        <span class="highlight"></span>
+                    </div>
+                    <div class="input-group">
+                        <input placeholder="_"type="date" required>
+                        <label>Event Date</label>
+                        <span class="highlight"></span>
+                    </div>
+                    <div class="input-group">
+                        <input placeholder="_"type="number" min="1" required>
+                        <label>Number of Tickets</label>
+                        <span class="highlight"></span>
+                    </div>
+                    <div class="buttons">
+                        <button type="button" class="prev-btn">Previous</button>
+                        <button type="button" class="next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Payment -->
+                <div class="step-content" data-step="3">
+                    <h2>Payment Details</h2>
+                    <div class="input-group">
+                        <input placeholder="_" type="text" required>
+                        <label>Card Holder Name</label>
+                        <span class="highlight"></span>
+                    </div>
+                    <div class="input-group">
+                        <input placeholder="_"type="text" required pattern="[0-9]{16}">
+                        <label>Card Number</label>
+                        <span class="highlight"></span>
+                    </div>
+                    <div class="card-details">
+                        <div class="input-group">
+                            <input placeholder="_" type="text" required pattern="[0-9]{2}/[0-9]{2}">
+                            <label>Expiry (MM/YY)</label>
+                            <span class="highlight"></span>
+                        </div>
+                        <div class="input-group">
+                            <input placeholder="_" type="text" required pattern="[0-9]{3}">
+                            <label>CVV</label>
+                            <span class="highlight"></span>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button type="button" class="prev-btn">Previous</button>
+                        <button type="submit" class="submit-btn">Register</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.querySelectorAll('.next-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const currentStep = button.closest('.step-content');
+                const nextStep = currentStep.nextElementSibling;
+                const currentStepNum = parseInt(currentStep.dataset.step);
+                
+                currentStep.classList.remove('active');
+                nextStep.classList.add('active');
+                
+                document.querySelector(`.progress-bar .step[data-step="${currentStepNum + 1}"]`)
+                    .classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.prev-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const currentStep = button.closest('.step-content');
+                const prevStep = currentStep.previousElementSibling;
+                const currentStepNum = parseInt(currentStep.dataset.step);
+                
+                currentStep.classList.remove('active');
+                prevStep.classList.add('active');
+                
+                document.querySelector(`.progress-bar .step[data-step="${currentStepNum}"]`)
+                    .classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
